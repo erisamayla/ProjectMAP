@@ -11,9 +11,11 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 
+// cartItems adalah daftar (list) dari objek ProductModel yang mewakili produk-produk yang ada di keranjang belanja.
+
 class CartAdapter(
-    private val cartItems: MutableList<ProductModel>, // Mutable untuk memodifikasi list
-    private val onQuantityChange: () -> Unit
+    private val cartItems: MutableList<ProductModel>, // Data produk dalam keranjang
+    private val onQuantityChange: () -> Unit    // Callback untuk memperbarui total harga
 ) : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
