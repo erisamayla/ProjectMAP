@@ -63,6 +63,7 @@ class CartActivity : AppCompatActivity() {
         }
     }
 
+    // menghitung total harga semua produk dalam keranjang
     private fun calculateTotalPrice(): Int {
         var totalPrice = 0
         for (item in cartItems) {
@@ -71,12 +72,14 @@ class CartActivity : AppCompatActivity() {
         return totalPrice
     }
 
+    // memperbarui tampilan total harga di layar
     private fun updateTotalPrice() {
         val totalPrice = calculateTotalPrice() // Hitung total harga
         val formattedPrice = "Total: Rp$totalPrice" // Format ke string
         tvTotalPrice.text = formattedPrice // Set ke TextView
     }
 
+    // Bertanggung jawab memuat dan memantau perubahan data keranjang dari Firestore
     private fun observeCartItems() {
         val cartRef = db.collection("cart")
 
