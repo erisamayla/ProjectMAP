@@ -65,8 +65,8 @@ class ProductActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Simpan ke Firestore dan pindah ke CartActivity
-            saveCartToFirestore(selectedProducts)
+            val intent = Intent(this, CartActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -139,15 +139,6 @@ class ProductActivity : AppCompatActivity() {
                             "imageRes" to product.imageRes
                         )
                         cartRef.add(productMap)
-                    } else {
-                        // Update jumlah produk jika sudah ada
-                        for (document in documents) {
-                            val existingQuantity = document.getLong("quantity") ?: 0
-                            val updatedQuantity = existingQuantity + product.quantity
-
-                            cartRef.document(document.id)
-                                .update("quantity", updatedQuantity)
-                        }
                     }
                 }
                 .addOnFailureListener { e ->
