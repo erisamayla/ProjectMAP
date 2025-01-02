@@ -7,6 +7,7 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+
     <TextView
         android:id="@+id/label_header"
         android:layout_width="wrap_content"
@@ -14,14 +15,27 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:text="Ties Pharmacy App"
-        android:textSize="35sp"
+        android:textSize="27sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.18"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.011" />
+        app:layout_constraintVertical_bias="0.002" />
+
+    <ImageButton
+        android:id="@+id/img_cart_btn"
+        android:layout_width="89dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="16dp"
+        android:background="@null"
+        android:src="@drawable/imgcart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.157"
+        app:layout_constraintStart_toEndOf="@+id/label_header"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
@@ -35,7 +49,6 @@
         tools:listitem="@layout/item_detail"
         android:scrollbars="vertical"
         android:overScrollMode="ifContentScrolls"
-        android:scrollbarSize="10dp"
-        />
+        android:scrollbarSize="10dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

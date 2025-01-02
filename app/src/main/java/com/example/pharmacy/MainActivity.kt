@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.ktx.firestore
@@ -14,6 +15,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // ImageButton untuk cart
+        val imgCartBtn: ImageButton = findViewById(R.id.img_cart_btn)
+
+        // Tambahkan klik listener
+        imgCartBtn.setOnClickListener {
+            // Intent ke CartActivity
+            val intent = Intent(this, CartActivity::class.java)
+            startActivity(intent)
+        }
 
         val db = Firebase.firestore
         db.collection("Pharmacy")

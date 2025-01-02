@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pharmacy.CartActivity
 import com.example.pharmacy.ProductModel
@@ -16,6 +17,9 @@ class ProductAdapter(
 ) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     private val filteredProducts = allProducts.filter { it.category.equals(category, ignoreCase = true) }
+
+    // Tambahkan callback untuk tombol Add
+    var onAddToCart: ((ProductModel) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_product, parent, false)
@@ -42,6 +46,19 @@ class ProductAdapter(
                 holder.quantity.text = product.quantity.toString()
             }
         }
+
+        // Tombol Add
+        holder.btnAdd.setOnClickListener {
+            if (product.quantity > 0) {
+                onAddToCart?.invoke(product)
+            } else {
+                Toast.makeText(
+                    holder.itemView.context,
+                    "Tambahkan minimal 1 produk sebelum ke keranjang!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
     }
 
     override fun getItemCount(): Int = filteredProducts.size
@@ -53,5 +70,6 @@ class ProductAdapter(
         val quantity: TextView = view.findViewById(R.id.txt_quantity)
         val btnIncrease: TextView = view.findViewById(R.id.btn_increase)
         val btnDecrease: TextView = view.findViewById(R.id.btn_decrease)
+        val btnAdd: Button = view.findViewById(R.id.btn_add)
     }
 }

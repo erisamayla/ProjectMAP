@@ -2,6 +2,7 @@ package com.example.pharmacy
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 
@@ -21,5 +22,12 @@ class OrderDoneActivity : AppCompatActivity() {
             startActivity(intent)
             finish() // Tutup activity ini
         }
+
+        val checkoutData = intent.getParcelableExtra<CheckoutModel>("checkoutData")
+        checkoutData?.let {
+            // Gunakan data checkout di halaman ini
+            Log.d("OrderDone", "Pesanan: $it")
+        }
+
     }
 }

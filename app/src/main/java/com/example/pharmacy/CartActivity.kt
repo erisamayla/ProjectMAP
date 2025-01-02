@@ -29,8 +29,8 @@ class CartActivity : AppCompatActivity() {
 
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        // Ambil data dari Firestore
-        loadCartItems()
+        // Real-time update untuk data keranjang
+        observeCartItems()
 
         // Tombol Checkout
         btnCheckout.setOnClickListener {
@@ -77,7 +77,7 @@ class CartActivity : AppCompatActivity() {
         tvTotalPrice.text = formattedPrice // Set ke TextView
     }
 
-    private fun loadCartItems() {
+    private fun observeCartItems() {
         val cartRef = db.collection("cart")
 
         val adapter = CartAdapter(cartItems) {
@@ -85,10 +85,15 @@ class CartActivity : AppCompatActivity() {
         }
         recyclerView.adapter = adapter
 
-        cartRef.get()
-            .addOnSuccessListener { documents ->
+        cartRef.addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                Log.w("Firestore", "Error mendapatkan data keranjang", e)
+                return@addSnapshotListener
+            }
+
+            if (snapshot != null) {
                 cartItems.clear()
-                for (document in documents) {
+                for (document in snapshot.documents) {
                     val product = ProductModel(
                         imageRes = document.getLong("imageRes")?.toInt() ?: R.drawable.pharmacy,
                         title = document.getString("title") ?: "",
@@ -102,8 +107,6 @@ class CartActivity : AppCompatActivity() {
                 recyclerView.adapter?.notifyDataSetChanged()
                 updateTotalPrice() // Perbarui total harga setelah data dimuat
             }
-            .addOnFailureListener { e ->
-                Log.w("Firestore", "Error mendapatkan data keranjang", e)
-            }
+        }
     }
 }
