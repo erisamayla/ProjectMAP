@@ -25,10 +25,10 @@ class CheckoutActivity : AppCompatActivity() {
         val selectedProducts = intent.getParcelableArrayListExtra<ProductModel>("selectedProducts") ?: listOf()
         Log.d("CheckoutActivity", "Produk diterima: $selectedProducts")
 
-        // Hitung total harga
+        // Hitung total harga dari produk yang dipilih
         val totalPrice = selectedProducts.sumOf { it.price * it.quantity }
 
-        // Atur RecyclerView
+        // Atur RecyclerView untuk menampilkan produk yang dipilih
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_selected_products)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = CheckoutAdapter(selectedProducts)
@@ -87,8 +87,10 @@ class CheckoutActivity : AppCompatActivity() {
                     Toast.makeText(this, "Gagal menyimpan pesanan: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
 
+            // koneksi ke firebase checkout
             db.collection("checkout").document(orderId).set(checkoutData)
                 .addOnSuccessListener {
+
                     // Hapus produk di keranjang
                     db.collection("cart").get()
                         .addOnSuccessListener { querySnapshot ->
@@ -113,6 +115,7 @@ class CheckoutActivity : AppCompatActivity() {
         }
     }
 
+    // saat di klik back ada konfirmasi
     override fun onBackPressed() {
         // Buat dialog konfirmasi
         AlertDialog.Builder(this)
