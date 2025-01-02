@@ -97,7 +97,7 @@ class CheckoutActivity : AppCompatActivity() {
                             for (document in querySnapshot.documents) {
                                 document.reference.delete() // Hapus produk di keranjang
                             }
-                            Toast.makeText(this, "Checkout berhasil! Keranjang kosong.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Checkout berhasil!", Toast.LENGTH_SHORT).show()
 
                             // Navigasi ke halaman OrderDoneActivity
                             val intent = Intent(this, OrderDoneActivity::class.java)
